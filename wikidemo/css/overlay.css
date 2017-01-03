@@ -1,0 +1,108 @@
+/* automatically absolutely positioned */
+div.overlay {
+    width:400px;
+    display:none;
+    color:#fff;
+    padding:10px;
+}
+
+.close {
+    background-image:url(images/close.png);
+    position:absolute;
+    right:5px;
+    top:7px;
+    cursor:pointer;
+    height:27px;
+    width:27px;
+}
+
+#overlay {
+    height:auto;
+    background-color: #fff8f3;
+    -moz-border-radius:15px;
+    border-radius:15px;
+    padding: 20px;
+}
+
+.simple_overlay {
+    /*
+
+  must be initially hidden */
+    display: none;
+    /*
+
+  place overlay on top of other elements */
+    z-index: 10000;
+    /* s
+
+  tyling */
+    background-color: #ede7b5;
+    width: 700px;
+    /*mi
+
+  n-height:350px;*/
+    border: 1px solid #f94a00;
+    -moz-border-radius: 0.4em;
+    -khtml-border-radius: 0.4em;
+    /*
+
+  CSS3 styling for latest browsers */
+
+}
+
+#overlay2 {
+    background-image:url(images/overlay.png)
+}
+
+#img {
+    position:absolute;
+}
+
+.next, .prev {
+    position:absolute;
+    cursor:pointer;
+    display:block;
+    width:100px;
+    height:200px;
+    background:url(images/next.gif) no-repeat;
+}
+
+.prev {
+    left:10px;
+}
+
+.next {
+    right:10px;
+}
+
+.info {
+    position:absolute;
+    bottom:10px;
+    background-color:#333;
+    opacity:0.7;
+    padding:4px 15px;
+}
+
+.info strong {
+    display:block;
+}
+
+.disabled {
+    visibility:hidden;
+}
+
+
+
+div.contentWrap {
+    overflow-y: auto;
+}
+
+/*.close {*/
+    /*background-image: url(images/close.png);*/
+    /*position: absolute;*/
+    /*right: -15px;*/
+    /*top: -15px;*/
+    /*cursor: pointer;*/
+    /*height: 25px;*/
+    /*width: 25px;*/
+/*}*/
