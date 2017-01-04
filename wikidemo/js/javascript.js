@@ -90,7 +90,7 @@ $(function () {
 
         console.log(currentNode);
 
-        var reqUrl = '?r=user/user_form&id=' + what;
+        var reqUrl = '?r=user/user_form&guid=' + what;
 
         $.get(reqUrl, getUserCreate);
 
