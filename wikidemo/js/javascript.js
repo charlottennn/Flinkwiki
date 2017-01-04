@@ -4,7 +4,6 @@ $(function () {
         content = data;
         returnFunction = "handleLeasingTerm";
         showOverlay();
-
     }
 
 
@@ -14,8 +13,14 @@ $(function () {
         showOverlay();
     }
 
+    function getUserCreate(data) {
+        content = data;
+        returnFunction = "handleUserCreate";
+        showOverlay();
+    }
 
-    $(document).on('click', '.new_leasingterm', function(e) {
+
+    $(document).on('click', '.new_leasingterm', function (e) {
 
         e.preventDefault();
 
@@ -31,7 +36,7 @@ $(function () {
 
         console.log(currentNode);
 
-        var reqUrl = '?r=leasingTerm/leasingterm_form&guid='+what;
+        var reqUrl = '?r=leasingTerm/leasingterm_form&guid=' + what;
 
         $.get(reqUrl, getLeasingterm);
 
@@ -39,9 +44,10 @@ $(function () {
 
     });
 
-     $(document).on('click', '.new_flinkerintern', function(e) {
 
-   // $(".new_flinkerintern").on('click', function (e) {
+    $(document).on('click', '.new_flinkerintern', function (e) {
+
+        // $(".new_flinkerintern").on('click', function (e) {
 
         e.preventDefault();
 
@@ -57,7 +63,7 @@ $(function () {
 
         console.log(currentNode);
 
-        var reqUrl = '?r=flinkerIntern/flinkerIntern_form&id='+what;
+        var reqUrl = '?r=flinkerIntern/flinkerIntern_form&id=' + what;
 
         $.get(reqUrl, getFlinkerintern);
 
@@ -65,7 +71,34 @@ $(function () {
 
     });
 
-    $('#logoutButton').click(function(){
+
+    $(document).on('click', '.new_user', function (e) {
+
+        // $(".new_flinkerintern").on('click', function (e) {
+
+        e.preventDefault();
+
+        currentNode = -1;
+
+        var what = this.id;
+
+        if (what == 'dialog_link') {
+            what = "";
+        } else {
+            currentNode = $("#userList").dataTable().fnGetPosition($(this).closest('tr')[0]);
+        }
+
+        console.log(currentNode);
+
+        var reqUrl = '?r=user/user_form&id=' + what;
+
+        $.get(reqUrl, getUserCreate);
+
+        return false;
+
+    });
+
+    $('#logoutButton').click(function () {
 
         window.location = "?r=site/logout"
 
@@ -73,7 +106,6 @@ $(function () {
 
 
 });
-
 
 
 function handleLeasingTerm() {
@@ -166,6 +198,57 @@ function handleFlinkerIntern() {
 
             },
 
+        });
+
+    });
+
+}
+
+function handleUserCreate() {
+
+    $('.cancel_overlay').click(function (e) {
+        e.preventDefault();
+
+        $('.simple_overlay').overlay().close();
+    });
+
+    $(".createUser").on('click', function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+
+            'url': '?r=user/createUser',
+            'data': {
+                guid: $('#guid').val(),
+                first_name: $('#first_name').val(),
+                last_name: $('#last_name').val(),
+                email: $('#email').val(),
+                password: $('#password').val(),
+                code_role: $('#code_role').val()
+            },
+            'dataType': 'json',
+            'success': function (data) {
+
+                if (currentNode >= 0) {
+                    $('#userList').dataTable().fnUpdate([
+                        data.guid, data.first_name, data.last_name, data.email, data.password, data.code_role, data.button,], currentNode)
+
+                } else {
+
+                    $('#userList').dataTable().fnAddData([
+                        data.guid, data.first_name, data.last_name, data.email, data.password, data.code_role, data.button,]);
+
+                }
+
+                $('.simple_overlay').overlay().close();
+
+            },
+
+            'error': function (data) { // if error occured
+                alert("Ett fel uppstod. Försök igen.");
+
+            },
         });
 
     });

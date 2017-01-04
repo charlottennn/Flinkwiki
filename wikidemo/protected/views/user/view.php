@@ -24,6 +24,7 @@ $this->menu=array(
 		'guid',
 		'first_name',
 		'last_name',
+        'mail',
 		'code_role',
 	),
 )); ?>

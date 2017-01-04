@@ -22,7 +22,7 @@ $this->breadcrumbs=array(
 </div>
 
 <div id="button-div">
-    <a href="#" id="dialog_link" class="btn new_flinkerintern">Lägg till</a>
+    <a href="#" id="dialog_link" class="btn new_flinkerintern">Lägg till index</a>
 </div>
 
 <div class="add-box object">

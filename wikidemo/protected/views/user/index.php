@@ -24,7 +24,7 @@ $this->menu=array(
 </div>
 
 <div id="button-div">
-    <a href="#" id="dialog_link" class="btn new_user">Lägg till term</a>
+    <a href="#" id="dialog_link" class="btn new_user">Lägg till användare</a>
 </div>
 
 <div class="add-box object">

@@ -28,8 +28,8 @@ class UserController extends Controller
 	{
 		return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view','create','update','admin','delete'),
-                'roles'=>array('SuperUser'),
+                'actions'=>array('index','view','create','update','admin','delete', 'createUser', 'user_form'),
+                'roles'=>array('SuperUser', 'admin'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
@@ -62,6 +62,57 @@ class UserController extends Controller
         $this->renderPartial('_form', array('User'=>$User));
 
     }
+
+    public function actionCreateUser() {
+
+        if(Yii::app()->user->checkAccess('createUsers')) {
+
+            if($_GET['guid']) {
+                $User=User::model()->findByPk($_GET['guid']);
+            } else {
+                $User=new User;
+            }
+
+            $User->first_name = $_GET['first_name'];
+            $User->last_name = $_GET['last_name'];
+            $User->email = $_GET['email'];
+            $User->password = $_GET['password'];
+            $User->code_role = $_GET['code_role'];
+
+
+            $User->password = crypt($User->password, 'salt');
+
+            if($User->save()) {
+
+                $auth=new AuthAssignment;
+                $auth->userid = $User->guid;
+                $auth->itemname = CodeRole::model()->findByPk($User->code_role)->title;
+            }
+
+            $msg='';
+            foreach($User->getErrors() as $errors)
+            {
+                foreach($errors as $error)
+                {
+                    if($error!='')
+                        $msg.="$error - ";
+                }
+            }
+
+            echo CJSON::encode(array("error"=>$msg,
+                "guid"=>$User->guid,
+                "first_name"=>$User->first_name,
+                "last_name"=>$User->last_name,
+                "email"=>$User->email,
+                "password"=>$User->password,
+                "code_role"=>$User->code_role,
+                "button"=>"<ul id='icons' class='ui-widget ui-helper-clearfix'><li class='ui-state-default ui-corner-all' title='Redigera'><a href='#' id=".$User->guid."' class='new_user'><span class='ui-icon ui-icon-pencil'></span></a></li></ul>"
+
+            ));
+        }
+
+
+        }
 
 	/**
 	 * Creates a new model.
